@@ -11,3 +11,7 @@ Readme Heading:
 dannyH — 12-3-2024 11:45
 API keys:
     Created Readme
+
+alexM — 12-3-2024 12:00
+Install:
+    added requirements.txt
