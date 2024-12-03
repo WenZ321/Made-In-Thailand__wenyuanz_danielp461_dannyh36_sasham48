@@ -21,13 +21,13 @@
     $git clone git@github.com:WenZ321/p01-Made-In-Thailand.git
 ```
 ### 2) Set up a virtual environment 
-'''
+```
     $python3 -m venv foo
-'''
+```
 ### 3) Activate virtual environment
-'''
+```
     $source ../foo/bin/activate
-'''
+```
 ### 4) Move into directory
 ```
    $cd p01-Made-In-Thailand
