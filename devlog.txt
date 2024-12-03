@@ -1,8 +1,13 @@
-Wen Zhang -- 12/2/2024
-* Updated design doc: Changed component map to have different shapes for pages, databases, etc. Added differentiations between landing and home page. Added DB lead. 
+Entries:
 
-Danny Huang -- 12/2/2024 
-* Created Readme Heading: added all the necessary components of the readme heading including the roster with roles, brief description of website, and the install and launch guide. 
+wenZ — 12-2-2024 21:30
+Design Doc:
+    Changed component map to have different shapes for pages, databases, etc. Added differentiations between landing and home page. Added DB lead. 
 
-Danny Huang -- 12/3/2024
-* Created Readme for API keys
+dannyH — 12-2-2024 22:00
+Readme Heading: 
+    added all the necessary components of the readme heading including the roster with roles, brief description of website, and the install and launch guide. 
+
+dannyH — 12-3-2024 11:45
+API keys:
+    Created Readme
