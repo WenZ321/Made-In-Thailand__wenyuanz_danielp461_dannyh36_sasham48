@@ -3,3 +3,6 @@ Wen Zhang -- 12/2/2024
 
 Danny Huang -- 12/2/2024 
 * Created Readme Heading: added all the necessary components of the readme heading including the roster with roles, brief description of website, and the install and launch guide. 
+
+Danny Huang -- 12/3/2024
+* Created Readme for API keys
