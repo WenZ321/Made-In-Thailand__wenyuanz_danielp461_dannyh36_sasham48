@@ -1,0 +1,2 @@
+Wen Zhang ---- 12/2/2024
+* Updated design doc: Changed component map to have different shapes for pages, databases, etc. Added differentiations between landing and home page. Added DB lead. 
