@@ -37,15 +37,37 @@
     $pip install -r requirements.txt
 ```
 ## Launch Code:
-### 1) Move into directory
+
+### 1) Make a Python virtual environment 
+```
+      a. Open up your device's terminal
+
+      b. Type ```$ python3 -m venv {path name}``` or ```$ py -m venv {path name}```
+
+      c. Type in one of the commands into your terminal for your specific OS to activate the environment
+
+      - Linux: ```$ . {path name}/bin/activate```
+    
+      - Windows Command Prompt: ```> {path name}\Scripts\activate```
+
+      - Windows PowerShell: ```> . .\{path name}\Scripts\activate```
+
+      - MacOS: ```$ source {path name}/bin/activate```
+
+      (If successful, the command line should display the name of your virtual environment: ```({path name})$ ```)
+
+      d. When done, type ```$ deactivate``` to deactivate the virtual environment
+```
+
+### 2) Move into directory
 ```
    $cd p01-Made-In-Thailand
 ```
-### 2) Launch the app
+### 3) Launch the app
 ```   
    $python3 app/__init__.py
 ```
-### 3) Go to local host, copy link below and paste into your browser
+### 4) Go to local host, copy link below and paste into your browser
 ```
    http://127.0.0.1:5000
 ```
