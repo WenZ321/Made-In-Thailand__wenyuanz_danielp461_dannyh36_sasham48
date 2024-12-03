@@ -1,4 +1,4 @@
-##XÆA-69 By Made in Thailand
+#XÆA-69 By Made in Thailand
 
 ## Team Members Roles:
 - **Wen Zhang (PM)**: User Authentication, Functions/Search Bar, Front-end (HTML)
