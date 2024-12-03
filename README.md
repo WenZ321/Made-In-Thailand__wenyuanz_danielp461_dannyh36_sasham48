@@ -43,7 +43,7 @@
 ```
 ### 2) Launch the app
 ```   
-   $python3 app/\__init\__.py
+   $python3 app/__init__.py
 ```
 ### 3) Go to local host, copy link below and paste into your browser
 ```
