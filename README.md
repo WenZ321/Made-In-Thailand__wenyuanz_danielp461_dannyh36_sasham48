@@ -12,9 +12,7 @@
 ```
     Users can:
         - create a list of stocks of their choosing by searching for specific stocks and favoriting them
-        - Create their own posts
-        - Edit only their own posts
-        - View other people's posts
+        - Organize displayed stocks by topics
 ```
 
 ## Install guide:
