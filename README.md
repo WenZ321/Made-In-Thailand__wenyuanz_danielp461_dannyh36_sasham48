@@ -36,6 +36,11 @@
 ```
     $pip install -r requirements.txt
 ```
+### 6) Acquire your API Keys
+```
+    - Navigate to reademe.md and follow the links within to acquire API keys
+    - Place your API keys into key_<API Name>.txt for each API locally.
+```
 ## Launch Code:
 
 ### 1) Make a Python virtual environment 
