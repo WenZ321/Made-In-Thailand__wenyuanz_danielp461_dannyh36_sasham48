@@ -9,9 +9,10 @@
 
 ### A website that allows users to view real-time information about any stocks the user wants to see
 
-    Users can:
-        - create a list of stocks of their choosing by searching for specific stocks and favoriting them to a watchlist
-        - Organize displayed stocks by topics
+Users can:
+- Log in and log out into their accounts
+- Create a list of stocks of their choosing by searching for specific stocks and favoriting them to a watchlist
+- Organize displayed stocks by topics
 
 
 ## Install guide:
