@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Signup</title>
+</head>
+
+<body>
+  
+  <!-- Main heading for the signup page -->
+  <h1> Create an Account! </h1>
+  
+  <!-- Display flash messages, if any (e.g., username already exists) -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+        <p class="flash-message">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Signup form for creating a new account -->
+  <form method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br><br>
+
+    <label for="pw">Password:</label>
+    <input type="password" id="pw" name="pw" required>
+    <br><br>
+    
+    <!-- Submit button to create the account -->
+    <button type="submit">Create Account</button>
+  </form>
+  
+  <br>
+
+  <h2> Already have an account? <a href ="/login"> Log in </a></h2>
+  
+
+
+</body>
+
+</html>

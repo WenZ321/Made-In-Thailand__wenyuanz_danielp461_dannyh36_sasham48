@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+
+<body>
+    <!-- Page heading -->
+    <h1>Login</h1>
+
+    <!-- Display flash messages, if any (e.g., login errors or account creation success) -->
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <p class="flash-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <!-- Login form for user credentials -->
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
+        
+        <label for="pw">Password:</label>
+        <input type="password" id="pw" name="pw" required>
+        <br><br>
+        
+        <!-- Submit button to log in -->
+        <button type="submit">Login</button>
+    </form>
+
+    <!-- Redirect to signup page for users without an account -->
+    <p>Don't have an account?</p>
+    <form action="/signup">
+        <button type="submit">Sign Up</button>
+    </form>
+
+</body>
+
+</html>
