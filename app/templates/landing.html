@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <title>Landing Page</title>
+</head>
+
+<body>
+    <h1>Welcome to xaea69 by Team Made-In-Thailand</h1>
+    <div class='main'>
+    <!-- Sign-up form link for new users, sends a GET request to '/signup' -->
+        <form action="/signup" method="get">
+            <label>Don't have an account? Sign up:</label>
+            <button type="submit">Sign Up</button>
+        </form>
+    
+        <br>
+    
+    <!-- Login form link for existing users, sends a GET request to '/login' -->
+        <form action="/login" method="get">
+            <label>Have an account?</label>
+            <button type="submit">Log in</button>
+        </form>
+    
+        <br>
+</body>
+
+</html>

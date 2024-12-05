@@ -12,7 +12,7 @@ import sqlite3
 import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-import database
+# import database
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -33,3 +33,6 @@ def signup():
 def main():
     return render_template("main.html")
 
+if __name__ == "__main__":
+    app.debug = True
+    app.run()
