@@ -12,7 +12,13 @@ import sqlite3
 import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-# import database
+
+keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
+for i in range(len(keys)):
+    file = open("keys/" + keys[i], "r")
+    keys[i] = file.read()
+    file.close()
+
 
 # Initialize Flask app
 app = Flask(__name__)
