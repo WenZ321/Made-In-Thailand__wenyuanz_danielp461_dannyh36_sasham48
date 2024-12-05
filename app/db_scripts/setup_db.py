@@ -33,3 +33,6 @@ CREATE TABLE IF NOT EXISTS watchlists (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 ''')
+
+con.commit()
+con.close()

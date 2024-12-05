@@ -12,7 +12,13 @@ import sqlite3
 import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
-# import database
+
+keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
+for i in range(len(keys)):
+    file = open("keys/" + keys[i], "r")
+    keys[i] = file.read()
+    file.close()
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -32,6 +38,9 @@ def signup():
 @app.route("/main", methods=['GET', 'POST'])
 def main():
     return render_template("main.html")
+
+def error(error_message):
+    return render_template("error.html", error_message = error_message)
 
 if __name__ == "__main__":
     app.debug = True
