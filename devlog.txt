@@ -19,3 +19,23 @@ Install:
 dannyH - 12-4-2024 11:19
 __init__.py:
     initilized flask environment
+
+wenZ - 12-4-2024 11:45
+templates:
+    login.html and signup.html
+
+alexM - 12-4-2024 11:45
+templates:
+    error.html
+
+danielP - 12-4-2024 11:45
+database:
+    database edits
+
+dannyH — 12-4-2024 11:45
+API keys:
+    set up in app
+
+alexM — 12-6-2024 01:15
+API keys:
+    error handling if they dont exist
