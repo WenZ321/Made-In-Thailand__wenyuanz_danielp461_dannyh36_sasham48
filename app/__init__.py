@@ -16,8 +16,7 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
     file = open("keys/" + keys[i], "r")
-    if file.read(): ##if file isnt empty
-        keys[i] = file.read()
+    keys[i] = file.read()
     file.close()
 
 
@@ -26,9 +25,6 @@ app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    for i in range(len(keys)):
-        if ".txt" in keys[i]:
-            return error(f"api key is missing in {keys[i]}") 
     return render_template("landing.html")
 
 @app.route("/login", methods=['GET', 'POST'])
