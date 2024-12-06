@@ -25,23 +25,27 @@ def key_check():
         if ".txt" in keys[i]:
             return error(f"api key is missing in {keys[i]}")
         ##check invalid keys
+        
+def loggedin():
+    if 'username' in session:
+        return redirect(url_for('main'))
 
 # Initialize Flask app
 app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    key_check()
+    loggedin()
     return render_template("landing.html")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    key_check()
+    loggedin()
     return render_template("login.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    key_check()
+    loggedin()
     return render_template("signup.html")
 
 @app.route("/main", methods=['GET', 'POST'])
