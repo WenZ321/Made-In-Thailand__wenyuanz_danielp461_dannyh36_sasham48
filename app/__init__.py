@@ -13,6 +13,8 @@ import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 
+DB_FILE = os.path.join(os.path.dirname(__file__), "/xaea69.db")
+
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
     file = open("keys/" + keys[i], "r")
@@ -25,22 +27,56 @@ def key_check():
         if ".txt" in keys[i]:
             return error(f"api key is missing in {keys[i]}")
         ##check invalid keys
-        
-def loggedin():
-    if 'username' in session:
-        return redirect(url_for('main'))
+
+def get_user(column, value):
+    conn = sqlite3.connect(DB_FILE)
+    cur = conn.cursor()
+    try:
+        query = f"SELECT * FROM users WHERE {column} = ?"
+        c.execute(query, (value,))
+        user = c.fetchone()
+    except sqlite3.Error as e:
+        print(f"An error occurred: {e}")
+        user = None
+    finally:
+        c.close()
+        conn.close()
+    return user
+
+def signed_in():
+    return 'username' in session.keys() and session['username'] is not None
+
+def check_user(username):
+    return username == get_user("username", username)
+
+def check_password(username):
+    base_pass = get_user("username", username) ## change this
+    return password == get_user("password", base_pass)
+
+def logged_in():
+    if signed_in():
+        return redirect('main')
+    username = request.form.get('username')
+    password = request.form.get('pw')    
+    if not check_user(username):
+        return render_template("/login", message="No such username exists")
+    if not check_password(password):
+        return render_template("/login.html", message="Incorrect password")
+    session['username'] = username
+    return redirect('/main')
 
 # Initialize Flask app
 app = Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    loggedin()
+    if signed_in():
+        return redirect('/main')
     return render_template("landing.html")
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    loggedin()
+    logged_in()
     return render_template("login.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
