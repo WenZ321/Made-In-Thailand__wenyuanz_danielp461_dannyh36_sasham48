@@ -13,7 +13,7 @@ import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
 
-DB_FILE = os.path.join(os.path.dirname(__file__), "/xaea69.db")
+DB_FILE = os.path.join(os.path.dirname(__file__), "xaea69.db")
 
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
@@ -33,13 +33,13 @@ def get_user(column, value):
     cur = conn.cursor()
     try:
         query = f"SELECT * FROM users WHERE {column} = ?"
-        c.execute(query, (value,))
-        user = c.fetchone()
+        cur.execute(query, (value,))
+        user = cur.fetchone()
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
         user = None
     finally:
-        c.close()
+        cur.close()
         conn.close()
     return user
 
@@ -50,8 +50,7 @@ def check_user(username):
     return username == get_user("username", username)
 
 def check_password(username):
-    base_pass = get_user("username", username) ## change this
-    return password == get_user("password", base_pass)
+    return True ## edit this
 
 def logged_in():
     if signed_in():
@@ -59,14 +58,15 @@ def logged_in():
     username = request.form.get('username')
     password = request.form.get('pw')    
     if not check_user(username):
-        return render_template("/login", message="No such username exists")
+        return render_template("login.html", message="No such username exists")
     if not check_password(password):
-        return render_template("/login.html", message="Incorrect password")
+        return render_template("login.html", message="Incorrect password")
     session['username'] = username
     return redirect('/main')
 
 # Initialize Flask app
 app = Flask(__name__)
+app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
@@ -81,7 +81,7 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    loggedin()
+    logged_in()
     return render_template("signup.html")
 
 @app.route("/main", methods=['GET', 'POST'])
