@@ -17,7 +17,7 @@ DB_FILE = os.path.join(os.path.dirname(__file__), "/xaea69.db")
 
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
-    file = open("app/keys/" + keys[i], "r")
+    file = open("keys/" + keys[i], "r")
     if file.read(): ##if file isnt empty
         keys[i] = file.read()
     file.close()
