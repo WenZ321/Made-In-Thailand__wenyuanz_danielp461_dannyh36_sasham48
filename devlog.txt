@@ -39,3 +39,7 @@ API keys:
 alexM — 12-6-2024 01:15
 API keys:
     error handling if they dont exist
+
+dannyH — 12-9-2024 11:45
+templates:
+    Worked on CSS for landing.html
