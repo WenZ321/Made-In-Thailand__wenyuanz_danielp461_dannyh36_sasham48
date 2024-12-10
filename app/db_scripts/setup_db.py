@@ -15,11 +15,11 @@ CREATE TABLE IF NOT EXISTS users (
 );
 ''')
 
-# Main TABLE
+# MAIN TABLE
 cur.execute('''
-CREATE TABLE IF NOT EXISTS mainTable {
+CREATE TABLE IF NOT EXISTS mainTable (
     tickers TEXT NOT NULL UNIQUE
-}    
+);
 ''')
 
 #FILTERS TABLE
