@@ -15,9 +15,20 @@
         </div>
     </nav>
         
-
-
-
+    <table>
+        <thead>
+            <tr>
+                <th> Tickers </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in main_table %}
+            <tr>
+                <td> {{row.ticker}} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 
 </html>

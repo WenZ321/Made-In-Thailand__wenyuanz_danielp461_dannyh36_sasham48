@@ -12,6 +12,7 @@ import sqlite3
 import csv
 import os
 from flask import Flask, render_template, request, session, redirect, url_for, flash
+from db_scripts import setup_db
 
 DB_FILE = os.path.join(os.path.dirname(__file__), "xaea69.db")
 
@@ -28,41 +29,45 @@ def key_check():
             return error(f"api key is missing in {keys[i]}")
         ##check invalid keys
 
-def get_user(column, value):
-    conn = sqlite3.connect(DB_FILE)
-    cur = conn.cursor()
-    try:
-        query = f"SELECT * FROM users WHERE {column} = ?"
-        cur.execute(query, (value,))
-        user = cur.fetchone()
-    except sqlite3.Error as e:
-        print(f"An error occurred: {e}")
-        user = None
-    finally:
-        cur.close()
-        conn.close()
-    return user
-
-def signed_in():
+def Is_signed_in():
     return 'username' in session.keys() and session['username'] is not None
 
 def check_user(username):
-    return username == get_user("username", username)
+    return username == setup_db.get_user("username", username)
 
-def check_password(username):
-    return True ## edit this
+def check_password(username, password):
+    user = setup_db.get_user("username", username)
+    if user is None:
+        return False
+    return user[2] == password
 
 def logged_in():
-    if signed_in():
+    if Is_signed_in():
         return redirect('main')
-    username = request.form.get('username')
-    password = request.form.get('pw')    
-    if not check_user(username):
-        return render_template("login.html", message="No such username exists")
-    if not check_password(password):
-        return render_template("login.html", message="Incorrect password")
-    session['username'] = username
+    elif request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('pw')    
+        if not check_user(username):
+            return render_template("login.html", message="No such username exists")
+        if not check_password(password):
+            return render_template("login.html", message="Incorrect password")
+        session['username'] = username
     return redirect('/main')
+
+def signUp():
+    if Is_signed_in():
+        return redirect('main')
+    elif request.method == "POST":
+        username = request.form['username']
+        password = request.form['pw']
+        
+        user = setup_db.get_user("username", username)
+        if user is None:
+            setup_db.addAccount(username, password)
+            return redirect(url_for('login'))
+    return render_template('signup.html')
+
+
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -70,7 +75,7 @@ app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    if signed_in():
+    if Is_signed_in():
         return redirect('/main')
     return render_template("landing.html")
 
@@ -81,7 +86,7 @@ def login():
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    logged_in()
+    signUp()
     return render_template("signup.html")
 
 @app.route("/main", methods=['GET', 'POST'])
