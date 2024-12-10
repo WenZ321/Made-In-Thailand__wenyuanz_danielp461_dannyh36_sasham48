@@ -29,7 +29,7 @@ def key_check():
             return error(f"api key is missing in {keys[i]}")
         ##check invalid keys
 
-def Is_signed_in():
+def signed_in():
     return 'username' in session.keys() and session['username'] is not None
 
 def check_user(username):
@@ -42,8 +42,8 @@ def check_password(username, password):
     return user[2] == password
 
 def logged_in():
-    if Is_signed_in():
-        return redirect('main')
+    if signed_in():
+        return redirect('/main')
     elif request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('pw')
@@ -54,28 +54,13 @@ def logged_in():
         session['username'] = username
     return redirect('/main')
 
-def signUp():
-    if Is_signed_in():
-        return redirect('main')
-    elif request.method == "POST":
-        username = request.form['username']
-        password = request.form['pw']
-
-        user = setup_db.get_user("username", username)
-        if user is None:
-            setup_db.addAccount(username, password)
-            return redirect(url_for('login'))
-    return render_template('signup.html')
-
-
-
 # Initialize Flask app
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    if Is_signed_in():
+    if signed_in():
         return redirect('/main')
     return render_template("landing.html")
 
@@ -85,9 +70,18 @@ def login():
     return render_template("login.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
-def signup():
-    signUp()
-    return render_template("signup.html")
+def sign_up():
+    if signed_in():
+        return redirect('/main')
+    elif request.method == "POST":
+        username = request.form['username']
+        password = request.form['pw']
+        user = setup_db.get_user("username", username)
+        if user is None:
+            setup_db.add_account(username, password)
+            session['username'] = username
+            return redirect('/main')
+    return render_template('signup.html')
 
 @app.route("/main", methods=['GET', 'POST'])
 def main():

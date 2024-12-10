@@ -51,32 +51,32 @@ con.close()
 def get_db_connection():
     return sqlite3.connect(DB_FILE)
 
-def addAccount(username, password):
+def add_account(username, password):
     try:
         db = get_db_connection()
         c = db.cursor()
         c.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        db.commit()
-        db.close()
     except sqlite3.Error as e:
         print(f"Database error: {e}")
     finally:
+        db.commit()
         db.close()
     
-    
 def get_user(column, value):
-    conn = sqlite3.connect(DB_FILE)
-    cur = conn.cursor()
+    db = get_db_connection()
+    cur = db.cursor()
     try:
-        query = f"SELECT * FROM users WHERE {column} = ?"
+        query = f"SELECT * FROM users WHERE {column} = (?)"
         cur.execute(query, (value))
         user = cur.fetchone()
+        print(user)
     except sqlite3.Error as e:
         print(f"An error occurred: {e}")
         user = None
     finally:
+        db.commit()
         cur.close()
-        conn.close()
+        db.close()
     return user
 
 
