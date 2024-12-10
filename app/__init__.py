@@ -18,7 +18,7 @@ DB_FILE = os.path.join(os.path.dirname(__file__), "xaea69.db")
 
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
-    file = open("keys/" + keys[i], "r")
+    file = open("app/keys/" + keys[i], "r")
     if file.read(): ##if file isnt empty
         keys[i] = file.read()
     file.close()
@@ -46,7 +46,7 @@ def logged_in():
         return redirect('main')
     elif request.method == "POST":
         username = request.form.get('username')
-        password = request.form.get('pw')    
+        password = request.form.get('pw')
         if not check_user(username):
             return render_template("login.html", message="No such username exists")
         if not check_password(password):
@@ -60,7 +60,7 @@ def signUp():
     elif request.method == "POST":
         username = request.form['username']
         password = request.form['pw']
-        
+
         user = setup_db.get_user("username", username)
         if user is None:
             setup_db.addAccount(username, password)
