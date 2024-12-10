@@ -11,8 +11,7 @@ cur.execute('''
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
-    password TEXT NOT NULL,
-    email TEXT NOT NULL UNIQUE
+    password TEXT NOT NULL
 );
 ''')
 
@@ -33,6 +32,10 @@ CREATE TABLE IF NOT EXISTS watchlists (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 ''')
+
+cur.execute("INSERT INTO filters (?, ?)", ("TOP25", "add a sql command here"))
+cur.execute("INSERT INTO filters (?, ?)", ("BOT25", "add a sql command here"))
+cur.execute("INSERT INTO filters (?, ?)", ("TECH", "add a sql command here"))
 
 con.commit()
 con.close()

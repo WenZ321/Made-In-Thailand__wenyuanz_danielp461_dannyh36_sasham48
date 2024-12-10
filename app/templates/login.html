@@ -8,18 +8,11 @@
 </head>
 
 <body>
+
+    {{message}}
+
     <!-- Page heading -->
     <h1>Login</h1>
-
-    <!-- Display flash messages, if any (e.g., login errors or account creation success) -->
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <p class="flash-message">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
-
     <!-- Login form for user credentials -->
     <form method="POST">
         <label for="username">Username:</label>
