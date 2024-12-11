@@ -1,5 +1,7 @@
 import sqlite3
 import os
+import requests
+import json
 
 DB_FILE = os.path.join(os.path.dirname(__file__), "../xaea69.db")
 
@@ -79,4 +81,18 @@ def get_user(column, value):
         db.close()
     return user
 
+
+
+def getTickers(key):
+    url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
+
+    querystring = {"page":"1","type":"STOCKS"}
+
+    headers = {
+        "x-rapidapi-key": f"{key}",
+        "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    return response
 

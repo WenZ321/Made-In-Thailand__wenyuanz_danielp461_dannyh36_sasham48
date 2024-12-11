@@ -86,6 +86,13 @@ def sign_up():
 @app.route("/main", methods=['GET', 'POST'])
 def main():
     key_check()
+    
+    file = open("app/keys/key_YH-Finance.txt", "r")
+    key = file.read()
+    tickers = setup_db.getTickers(key)
+    print(tickers.json())
+    file.close()
+    
     return render_template("main.html")
 
 def error(error_message):
