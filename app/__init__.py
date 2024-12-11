@@ -33,26 +33,17 @@ def signed_in():
     return 'username' in session.keys() and session['username'] is not None
 
 def check_user(username):
-    return username == setup_db.get_user("username", username)
+    user = setup_db.get_user("username", username)
+    print(user)
+    if user is None:
+        return False
+    return user[1] == username
 
 def check_password(username, password):
     user = setup_db.get_user("username", username)
     if user is None:
         return False
     return user[2] == password
-
-def logged_in():
-    if signed_in():
-        return redirect('/main')
-    elif request.method == "POST":
-        username = request.form.get('username')
-        password = request.form.get('pw')
-        if not check_user(username):
-            return render_template("login.html", message="No such username exists")
-        if not check_password(password):
-            return render_template("login.html", message="Incorrect password")
-        session['username'] = username
-    return redirect('/main')
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -66,7 +57,19 @@ def landing():
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
-    logged_in()
+    if signed_in():
+        return redirect('/main')
+    elif request.method == "POST":
+        username = request.form.get('username')
+        password = request.form.get('pw')
+        print("user check: ", check_user(username))
+        print("pass check:", check_password(username, password))
+        if not check_user(username):
+            return render_template("login.html", message="No such username exists")
+        if not check_password(username, password):
+            return render_template("login.html", message="Incorrect password")
+        session['username'] = username
+        return redirect('/main')
     return render_template("login.html")
 
 @app.route("/signup", methods=['GET', 'POST'])
