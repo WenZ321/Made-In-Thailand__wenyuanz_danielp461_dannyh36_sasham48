@@ -16,15 +16,21 @@
     </nav>
         
     <table>
+
+        <form action="/logout">
+            <input type="submit" value="Log Out" name="log Out">
+        </form>
+
         <thead>
             <tr>
-                <th> Tickers </th>
+                <th> Stocks </th>
             </tr>
         </thead>
         <tbody>
-            {% for row in main_table %}
+            {% for ticker, name in mainTable.items() %}
             <tr>
-                <td> {{row.ticker}} </td>
+                <td> {{ticker}} </td>
+                <td> {{name}} </td>
             </tr>
             {% endfor %}
         </tbody>
