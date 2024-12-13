@@ -4,23 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Login</title>
 </head>
 
 <body>
 
-    {{message}}
+    <p class="ease-out duration-75 max-w-lg">{{message}}</p>
 
     <!-- Page heading -->
     <h1>Login</h1>
     <!-- Login form for user credentials -->
     <form method="POST">
         <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <input class="border border-solid" type="text" id="username" name="username" required>
         <br><br>
         
         <label for="pw">Password:</label>
-        <input type="password" id="pw" name="pw" required>
+        <input class="border border-solid" type="password" id="pw" name="pw" required>
         <br><br>
         
         <!-- Submit button to log in -->
