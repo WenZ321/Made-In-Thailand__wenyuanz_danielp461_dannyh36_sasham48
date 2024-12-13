@@ -43,3 +43,11 @@ API keys:
 dannyH — 12-9-2024 11:45
 templates:
     Worked on CSS for landing.html
+
+dannyH — 12-12-2024 11:45
+templates:
+    Worked on CSS for signup and login
+
+dannyH — 12-13-2024 11:45
+templates:
+    Finished initial CSS for signup
