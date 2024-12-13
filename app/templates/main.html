@@ -27,10 +27,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for ticker, name in mainTable.items() %}
+            {% for ticker, data in mainTable.items() %}
             <tr>
                 <td> {{ticker}} </td>
-                <td> {{name}} </td>
+                <td> {{data.name}} </td>
+                <td> {{data.lastSale}} </td>
+                <td> {{data.netChange}} </td>
             </tr>
             {% endfor %}
         </tbody>

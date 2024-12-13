@@ -21,7 +21,9 @@ CREATE TABLE IF NOT EXISTS users (
 cur.execute('''
 CREATE TABLE IF NOT EXISTS mainTable (
     ticker TEXT NOT NULL,
-    name TEXT NOT NULL
+    name TEXT NOT NULL, 
+    lastSale TEXT NOT NULL, 
+    netChange TEXT NOT NULL
 );
 ''')
 
@@ -87,7 +89,7 @@ def get_user(column, value):
 def createMainTable():
     url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
 
-    querystring = {"page":"2","type":"STOCKS"}
+    querystring = {"page":"50","type":"STOCKS"}
 
     file = open("app/keys/key_YH-Finance.txt", "r")
     key = file.read()
@@ -103,11 +105,13 @@ def createMainTable():
     data = response.json()
     body_section = data["body"]
     
+    # print(data)
+    
     db = get_db_connection()
     cur = db.cursor()
     
     for entry in body_section:
-        cur.execute("INSERT INTO mainTable (ticker, name) VALUES (?, ?)", (entry["symbol"], entry['name']))
+        cur.execute("INSERT INTO mainTable (ticker, name, lastSale, netChange) VALUES (?, ?, ?, ?)", (entry["symbol"], entry['name'], entry["lastsale"], entry["netchange"]))
         db.commit()
 
     cur.close()
@@ -116,9 +120,16 @@ def createMainTable():
 def getMainTable():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute("SELECT ticker, name FROM mainTable")
+    cur.execute("SELECT ticker, name, lastSale, netChange FROM mainTable")
     data = cur.fetchall()
-    dataEntries = {ticker: name for ticker, name in data}
+    dataEntries = {
+        ticker: {
+            "name": name,
+            "lastSale": lastSale,
+            "netChange": netChange
+        }
+        for ticker, name, lastSale, netChange in data
+    }
     
     cur.close()
     db.close()
