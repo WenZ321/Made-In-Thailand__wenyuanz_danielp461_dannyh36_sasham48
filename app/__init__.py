@@ -51,6 +51,7 @@ app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
+    setup_db.createMainTable()
     if signed_in():
         return redirect('/main')
     return render_template("landing.html")
@@ -82,18 +83,26 @@ def sign_up():
         user = setup_db.get_user("username", username)
         if user is None:
             setup_db.add_account(username, password)
-            session['username'] = username
-            return redirect('/main')
+            return redirect('/login')
     return render_template('signup.html')
 
 @app.route("/main", methods=['GET', 'POST'])
 def main():
+    if not signed_in():
+        return redirect('/landing')
     key_check()
     setup_db.createMainTable()
     
     table  = setup_db.getMainTable()
     print(table)
     return render_template("main.html", mainTable = table)
+
+@app.route("/logout", methods = ['GET', 'POST'])
+def logout():
+    session.pop('username', None)
+    session.clear()
+    flash("You have been logged out.")
+    return redirect(url_for('landing'))
 
 def error(error_message):
     return render_template("error.html", error_message = error_message)
