@@ -4,39 +4,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <title> Main Page </title>
 </head>
 
-<body>
-    <nav class = "flex items-center justify-between felx-wrap bg-blue-500 p-6 font-bold"> 
-        <div class = "flex items-center text-white mr-6">
+<body class="font-sans bg-sky-50">
+    <nav class = "min-w-full block sticky h-20 bg-blue-800 p-6 font-bold"> 
+        <div class = "flex text-white float-left text-3xl">
             XAEA69
         </div>
-    </nav>
-        
-    <table>
 
-        <form action="/logout" method = "post">
+        <form class ="float-right text-white" action="/logout" method = "post">
             <input type="submit" value="Log Out" name="log Out">
         </form>
-
-        <thead>
-            <tr>
-                <th> Stocks </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ticker, data in mainTable.items() %}
-            <tr>
-                <td> {{ticker}} </td>
-                <td> {{data.name}} </td>
-                <td> {{data.lastSale}} </td>
-                <td> {{data.netChange}} </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    </nav>
+        
+    <div class="mx-auto mt-20 max-w-3xl">
+        <div class="block mx-auto text-3xl"> Stocks </div>
+        <br>
+        {% for ticker, data in mainTable.items() %}
+            <div class="group grid grid-rows-2 grid-cols-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
+                <div class="font-bold group-hover:text-white">{{ticker}} </div> 
+                <div class="font-bold group-hover:text-white justify-self-end">{{data.last_sale}} </div>
+                <div class="text-slate-400 truncate group-hover:text-slate-300">{{data.name}}</div>
+                <div class="justify-self-end">
+                    {% if data.net_change|float < 0.0 %}
+                        <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                    {% elif data.net_change == 'UNCH'%}
+                        <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
+                    {% else %}
+                        <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </body>
 
 </html>
