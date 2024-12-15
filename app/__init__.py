@@ -11,16 +11,17 @@ Target Ship Date: 2024-12-13
 import sqlite3
 import csv
 import os
-from flask import Flask, render_template, request, session, redirect, url_for
-from db_scripts import setup_db
+from flask import Flask, render_template, request, session, redirect
+from db_scripts import db_commands
 
 DB_FILE = os.path.join(os.path.dirname(__file__), "xaea69.db")
 
 keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
     file = open("app/keys/" + keys[i], "r")
-    if file.read(): ##if file isnt empty
-        keys[i] = file.read()
+    content = file.read()
+    if content: ##if file isnt empty
+        keys[i] = content
     file.close()
 
 def key_check():
@@ -33,13 +34,13 @@ def signed_in():
     return 'username' in session.keys() and session['username'] is not None
 
 def check_user(username):
-    user = setup_db.get_user("username", username)
+    user = db_commands.get_user("username", username)
     if user is None:
         return False
     return user[1] == username
 
 def check_password(username, password):
-    user = setup_db.get_user("username", username)
+    user = db_commands.get_user("username", username)
     if user is None:
         return False
     return user[2] == password
@@ -50,7 +51,6 @@ app.secret_key = os.urandom(32)
 
 @app.route("/", methods=['GET', 'POST'])
 def landing():
-    setup_db.update_tickers()
     if signed_in():
         return redirect('/main')
     return render_template("landing.html")
@@ -77,9 +77,9 @@ def sign_up():
     elif request.method == "POST":
         username = request.form['username']
         password = request.form['pw']
-        user = setup_db.get_user("username", username)
+        user = db_commands.get_user("username", username)
         if user is None:
-            setup_db.add_account(username, password)
+            db_commands.add_account(username, password)
             return redirect('/login')
         else:
             return render_template('signup.html', message="Username already exists")
@@ -90,11 +90,19 @@ def main():
     if not signed_in():
         return redirect('/landing')
     key_check()
-    setup_db.update_tickers()
     
-    table  = setup_db.get_tickers()
-    print(table)
-    return render_template("main.html", mainTable = table)
+    filter = "ALL"
+    if request.method == "POST":
+        filter = request.form["filter"]
+    
+    db_commands.filter(filter, keys[2])
+    table = db_commands.get_tickers()
+
+    filter_names = db_commands.get_filters("name")
+    for i in range(len(filter_names)):
+        filter_names[i] = filter_names[i][0]
+
+    return render_template("main.html", filters = filter_names, table = table)
 
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():

@@ -14,9 +14,14 @@
             XAEA69
         </div>
     </nav>
-        
-    <table>
+    
+    {% for name in filters %}
+        <form action="/main" method="post">
+            <input type="submit" value="{{name}}" name="filter">
+        </form>
+    {% endfor %}
 
+    <table>
         <form action="/logout" method = "post">
             <input type="submit" value="Log Out" name="log Out">
         </form>
@@ -27,12 +32,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for ticker, data in mainTable.items() %}
+            {% for ticker, data in table.items() %}
             <tr>
                 <td> {{ticker}} </td>
                 <td> {{data.name}} </td>
-                <td> {{data.lastSale}} </td>
-                <td> {{data.netChange}} </td>
+                <td> {{data.last_sale}} </td>
+                <td> {{data.net_change}} </td>
             </tr>
             {% endfor %}
         </tbody>
