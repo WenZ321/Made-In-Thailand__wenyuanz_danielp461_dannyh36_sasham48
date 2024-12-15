@@ -19,11 +19,19 @@
             <input type="submit" value="Log Out" name="log Out">
         </form>
     </nav>
+
+    <div class="flex justify-self-center gap-4 mt-10">
+        {% for name in filters %}
+            <form action="/main" method="post">
+                <input class = "px-1 py-0.5 border border-black hover:bg-sky-300 hover:border-sky-500 rounded-xl"type="submit" value="{{name}}" name="filter">
+            </form>
+        {% endfor %}
+    </div>
         
-    <div class="mx-auto mt-20 max-w-3xl">
+    <div class="mx-auto mt-10 max-w-3xl">
         <div class="block mx-auto text-3xl"> Stocks </div>
         <br>
-        {% for ticker, data in mainTable.items() %}
+        {% for ticker, data in table.items() %}
             <div class="group grid grid-rows-2 grid-cols-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
                 <div class="font-bold group-hover:text-white">{{ticker}} </div> 
                 <div class="font-bold group-hover:text-white justify-self-end">{{data.last_sale}} </div>
@@ -41,5 +49,11 @@
         {% endfor %}
     </div>
 </body>
+
+<footer class="bg-blue-800 w-full mt-10">
+    <div class="w-full p-4">
+      <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
+    </div>
+</footer>
 
 </html>
