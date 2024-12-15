@@ -10,13 +10,8 @@
 
 <body class="font-sans">
     
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            {% for message in messages %}
-                <p class="flash-message">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+    <!-- Display flash messages, if any (e.g., username already exists) -->
+    <p class="object-right-bottom ease-out duration-75 max-w-lg active:">{{ message }}</p>
     
     <h1 class="p-6 max-w-2xl mx-auto flex mt-10 text-center font-extrabold text-5xl">Welcome to xaea69 by Team Made-In-Thailand</h1>
     <div class="main text-center mt-20 rounded-3xl max-w-3xl ml-auto mr-auto px-2 py-10 grid grid-rows-2">
