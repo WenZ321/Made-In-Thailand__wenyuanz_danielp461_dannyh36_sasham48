@@ -51,3 +51,7 @@ templates:
 dannyH — 12-13-2024 11:45
 templates:
     Finished initial CSS for signup
+
+dannyH — 12-15-2024 6:41
+templates:
+    Added and Finished CSS for signup, login, landing and main
