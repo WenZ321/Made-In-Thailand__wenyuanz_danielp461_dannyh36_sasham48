@@ -1,7 +1,4 @@
-import sqlite3
-import os
-import requests
-import json
+import sqlite3, os, requests
 
 DB_FILE = os.path.join(os.path.dirname(__file__), "../xaea69.db")
 
@@ -19,11 +16,11 @@ CREATE TABLE IF NOT EXISTS users (
 
 # MAIN TABLE
 cur.execute('''
-CREATE TABLE IF NOT EXISTS mainTable (
+CREATE TABLE IF NOT EXISTS tickers (
     ticker TEXT NOT NULL,
     name TEXT NOT NULL, 
-    lastSale TEXT NOT NULL, 
-    netChange TEXT NOT NULL
+    last_sale TEXT NOT NULL, 
+    net_change TEXT NOT NULL
 );
 ''')
 
@@ -86,11 +83,12 @@ def get_user(column, value):
 
 
 
-def createMainTable():
+def update_tickers():
     url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
 
     querystring = {"page":"50","type":"STOCKS"}
 
+## Todo: create function
     file = open("app/keys/key_YH-Finance.txt", "r")
     key = file.read()
 
@@ -104,31 +102,31 @@ def createMainTable():
     response = requests.get(url, headers=headers, params=querystring)
     data = response.json()
     body_section = data["body"]
-    
-    # print(data)
-    
+
     db = get_db_connection()
     cur = db.cursor()
     
     for entry in body_section:
-        cur.execute("INSERT INTO mainTable (ticker, name, lastSale, netChange) VALUES (?, ?, ?, ?)", (entry["symbol"], entry['name'], entry["lastsale"], entry["netchange"]))
+        cur.execute("INSERT INTO tickers (ticker, name, last_sale, net_change) VALUES (?, ?, ?, ?)", (entry["symbol"], entry['name'], entry["lastsale"], entry["netchange"]))
         db.commit()
 
     cur.close()
     db.close()
 
-def getMainTable():
+def get_tickers():
     db = get_db_connection()
     cur = db.cursor()
-    cur.execute("SELECT ticker, name, lastSale, netChange FROM mainTable")
+
+    cur.execute("SELECT ticker, name, last_sale, net_change FROM tickers")
     data = cur.fetchall()
+
     dataEntries = {
         ticker: {
             "name": name,
-            "lastSale": lastSale,
-            "netChange": netChange
+            "last_sale": last_sale,
+            "net_change": net_change
         }
-        for ticker, name, lastSale, netChange in data
+        for ticker, name, last_sale, net_change in data
     }
     
     cur.close()
