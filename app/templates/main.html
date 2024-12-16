@@ -36,22 +36,23 @@
         <div class="block mx-auto text-3xl"> Stocks </div>
         <br>
         {% for ticker, data in table.items() %}
-            <div class="group grid grid-rows-2 grid-cols-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
-                <div class="font-bold group-hover:text-white">{{ticker}} </div> 
+            <div class="group grid-cols-2 gap-auto">
                 <form action="/main" method="post">
-                    <input type="checkbox" name="watchlist" value="{{ticker}}">
-                    <input type="submit" name="update_watchlist" value="add to watchlist">
+                    <input class="" type="submit" name="watchlist" value="{{ticker}}">
                 </form>
-                <div class="font-bold group-hover:text-white justify-self-end">{{data.last_sale}} </div>
-                <div class="text-slate-400 truncate group-hover:text-slate-300">{{data.name}}</div>
-                <div class="justify-self-end">
-                    {% if data.net_change|float < 0.0 %}
-                        <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
-                    {% elif data.net_change == 'UNCH'%}
-                        <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
-                    {% else %}
-                        <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
-                    {% endif %}
+                <div class="grid grid-rows-2 grid-cols-2 gap-auto px-8 py-2 group-hover:bg-blue-800 rounded-2xl">
+                    <div class="font-bold group-hover:text-white">{{ticker}} </div> 
+                    <div class="font-bold group-hover:text-white justify-self-end">{{data.last_sale}} </div>
+                    <div class="text-slate-400 truncate group-hover:text-slate-300">{{data.name}}</div>
+                    <div class="justify-self-end">
+                        {% if data.net_change|float < 0.0 %}
+                            <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                        {% elif data.net_change == 'UNCH'%}
+                            <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
+                        {% else %}
+                            <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         {% endfor %}
