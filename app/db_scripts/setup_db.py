@@ -45,8 +45,11 @@ CREATE TABLE IF NOT EXISTS watchlists (
 cur.execute("SELECT * from filters")
 data = cur.fetchall()
 if len(data) == 0:
-    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("ALL", "update_tickers"))
-    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("TOP25", "top_25"))
+    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("ALL", "all_tickers"))
+    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("GAIN", "day_gainers"))
+    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("LOSE", "day_losers"))
+    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("ACTIVE", "most_actives"))
+    cur.execute("INSERT INTO filters (name, filter) VALUES (?, ?)", ("TECH", "growth_technology_stocks"))
 
 con.commit()
 con.close()
