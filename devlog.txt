@@ -55,3 +55,8 @@ templates:
 dannyH — 12-15-2024 6:41
 templates:
     Added and Finished CSS for signup, login, landing and main
+
+danielP — 12-15-2024 7:45
+db_scripts:
+    Added and finished most database commands required for adding filters
+Also completed user-authentication and filtering
