@@ -1,50 +1,8 @@
 import sqlite3, requests
-from db_scripts import setup_db, allTickers_db
+from db_scripts import setup_db
 
 def get_db_connection():
     return sqlite3.connect(setup_db.DB_FILE)
-
-def get_allTickerdb_connection():
-    return sqlite3.connect(allTickers_db.DB_FILE)
-
-'''
-def createAllTickers():
-    count = 1
-    total_pages = 280
-    file = open("app/keys/key_YH-Finance.txt", "r")
-    key = file.read()
-    
-    url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
-    headers = {
-        "x-rapidapi-key": f"{key}",
-        "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
-    }
-    
-    db = get_allTickerdb_connection()
-    cur = db.cursor()
-    
-    for page in range(1, total_pages + 1):
-        querystring = {"page":str(page),"type":"STOCKS"}
-        response = requests.get(url, headers=headers, params=querystring)
-        
-        data = response.json()
-        body = data["body"]
-        
-        for stock in body:
-            ticker = stock["symbol"]
-            if ticker:
-                try:
-                    cur.execute("INSERT OR IGNORE INTO allTickers (ticker, id) VALUES (?, ?)", (ticker, count))
-                    count += 1
-                except Exception as e:
-                    print(f"Error inserting {ticker}: {e}")
-            else:
-                print(f"Error: {response.status_code}")
-                break  # Stop fetching on error
-    cur.close()
-    db.commit()
-    db.close()
-'''
 
 def clear_table():
     db = get_db_connection()
@@ -158,14 +116,7 @@ def get_tickers():
     return data_entries
 
 def add_watchlist(ticker, key):
-    url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
-
-    querystring = {"page":"1","type":"STOCKS"}
-
-    headers = {
-        "x-rapidapi-key": f"{key}",
-        "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
-    }
+    # searching 
 
     response = requests.get(url, headers=headers, params=querystring)
     data = response.json()
