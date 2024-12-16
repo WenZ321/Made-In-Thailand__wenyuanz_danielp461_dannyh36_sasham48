@@ -18,7 +18,7 @@ for i in range(len(keys)):
     file = open("app/keys/" + keys[i], "r")
     content = file.read()
     if content: ##if file isnt empty
-        keys[i] = content
+        keys[i] = content.replace("\n", "")
     file.close()
 
 def key_check():
@@ -99,9 +99,6 @@ def main():
             if watchlist_new:
                 watchlist_new = watchlist_new[0]
                 db_commands.add_watchlist(watchlist_new, keys[1])
-            
-
-    
     db_commands.filter(filter, keys[1])
     table = db_commands.get_tickers()
 
@@ -109,15 +106,12 @@ def main():
     for i in range(len(filter_names)):
         filter_names[i] = filter_names[i][0]
         
-
     return render_template("main.html", filters = filter_names, table = table)
 
 @app.route("/watchlist", methods = ['GET', 'POST'])
 def watchlist():
     if not signed_in():
         return redirect('/landing')
-    
-    
     
     return render_template("watchlist.html")
     

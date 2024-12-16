@@ -170,8 +170,6 @@ def add_watchlist(ticker, key):
     response = requests.get(url, headers=headers, params=querystring)
     data = response.json()
     body_section = data["body"]
-    
-    
 
 
 def get_filters(column):
@@ -187,6 +185,7 @@ def get_filters(column):
     return data
 
 def filter(filter_name, key):
+    print(key, "hiasdasdas")
     filters = get_filters("*")
     func = "all_tickers"
     for filter in filters:
