@@ -44,6 +44,10 @@ dannyH — 12-9-2024 11:45
 templates:
     Worked on CSS for landing.html
 
+wenZ — 12-11-2024 11:40
+db_commands.py:
+    Was able to call the YH finance api and receive information for our db tables
+
 dannyH — 12-12-2024 11:45
 templates:
     Worked on CSS for signup and login
@@ -51,6 +55,10 @@ templates:
 dannyH — 12-13-2024 11:45
 templates:
     Finished initial CSS for signup
+
+wenZ — 12-14-2024 11:50
+templates and __init__.py:
+    Added flash messages and fixed logout button on the main page
 
 dannyH — 12-15-2024 6:41
 templates:
@@ -60,3 +68,8 @@ danielP — 12-15-2024 7:45
 db_scripts:
     Added and finished most database commands required for adding filters
 Also completed user-authentication and filtering
+
+wenZ — 12-15-2024 9:00
+templates and db_commands.py:
+    Started on the watchlist page
+    Changed how we are ordering our db pages

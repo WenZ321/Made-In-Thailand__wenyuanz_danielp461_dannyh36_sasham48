@@ -9,14 +9,11 @@ Target Ship Date: 2024-12-13
 
 # Import necessary libraries
 import sqlite3
-import csv
 import os
 from flask import Flask, render_template, request, session, redirect
 from db_scripts import db_commands
 
-DB_FILE = os.path.join(os.path.dirname(__file__), "xaea69.db")
-
-keys = ["key_Calendarific.txt", "key_MarketStack.txt", "key_YH-Finance.txt"]
+keys = ["key_Calendarific.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
     file = open("app/keys/" + keys[i], "r")
     content = file.read()
@@ -96,7 +93,7 @@ def main():
     if request.method == "POST":
         filter = request.form["filter"]
     
-    db_commands.filter(filter, keys[2])
+    db_commands.filter(filter, keys[1])
     table = db_commands.get_tickers()
 
     filter_names = db_commands.get_filters("name")
@@ -124,6 +121,15 @@ def logout():
 def error(error_message):
     return render_template("error.html", error_message = error_message)
 
+
+
 if __name__ == "__main__":
     app.debug = True
+    
+    
+    #DB_FILE = os.path.join(os.path.dirname(__file__), "allTickers.db")
+    
+    #if not os.path.exists(DB_FILE):
+    #    db_commands.createAllTickers()
+    
     app.run()
