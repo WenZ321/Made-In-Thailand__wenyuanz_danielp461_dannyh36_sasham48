@@ -103,8 +103,6 @@ def main_tickers(key):
     data = response.json()
     body_section = data["body"]
 
-    print(data)
-
     db = get_db_connection()
     cur = db.cursor()
     

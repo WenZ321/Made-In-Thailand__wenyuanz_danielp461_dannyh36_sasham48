@@ -91,7 +91,16 @@ def main():
     
     filter = "ALL"
     if request.method == "POST":
-        filter = request.form["filter"]
+        if 'filter' in request.form:
+            filter = request.form["filter"]
+        if 'update_watchlist' in request.form:
+            update_watchlist = request.form["update_watchlist"]
+            watchlist_new = request.form.getlist("watchlist")
+            if watchlist_new:
+                watchlist_new = watchlist_new[0]
+                db_commands.add_watchlist(watchlist_new, keys[1])
+            
+
     
     db_commands.filter(filter, keys[1])
     table = db_commands.get_tickers()
@@ -99,6 +108,7 @@ def main():
     filter_names = db_commands.get_filters("name")
     for i in range(len(filter_names)):
         filter_names[i] = filter_names[i][0]
+        
 
     return render_template("main.html", filters = filter_names, table = table)
 
