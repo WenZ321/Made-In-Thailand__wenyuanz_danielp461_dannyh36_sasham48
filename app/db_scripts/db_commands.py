@@ -15,7 +15,7 @@ def add_account(username, password):
         cur.close()
         db.commit()
         db.close()
-    
+
 def get_user(column, value):
     db = get_db_connection()
     cur = db.cursor()
@@ -33,19 +33,22 @@ def get_user(column, value):
     return user
 
 def update_tickers(key):
-    print("ashdkjashjkda", key)
     url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
 
-    querystring = {"page":"50","type":"STOCKS"}
+    querystring = {"page":"1","type":"STOCKS"}
 
     headers = {
         "x-rapidapi-key": f"{key}",
         "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
     }
 
+
+
     response = requests.get(url, headers=headers, params=querystring)
     data = response.json()
     body_section = data["body"]
+
+    print(data)
 
     db = get_db_connection()
     cur = db.cursor()
@@ -77,6 +80,23 @@ def get_tickers():
     db.close()
     
     return data_entries
+
+def add_watchlist(ticker, key):
+    url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
+
+    querystring = {"page":"1","type":"STOCKS"}
+
+    headers = {
+        "x-rapidapi-key": f"{key}",
+        "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
+    }
+
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+    body_section = data["body"]
+    
+    
+
 
 def get_filters(column):
     db = get_db_connection()

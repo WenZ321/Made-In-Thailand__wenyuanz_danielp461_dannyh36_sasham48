@@ -88,6 +88,7 @@ def sign_up():
 @app.route("/main", methods=['GET', 'POST'])
 def main():
     if not signed_in():
+        print("1234")
         return redirect('/landing')
     key_check()
     
@@ -103,6 +104,16 @@ def main():
         filter_names[i] = filter_names[i][0]
 
     return render_template("main.html", filters = filter_names, table = table)
+
+@app.route("/watchlist", methods = ['GET', 'POST'])
+def watchlist():
+    if not signed_in():
+        return redirect('/landing')
+    
+    
+    
+    return render_template("watchlist.html")
+    
 
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
