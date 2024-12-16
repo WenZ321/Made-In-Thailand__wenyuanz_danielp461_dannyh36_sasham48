@@ -4,6 +4,20 @@ from db_scripts import setup_db
 def get_db_connection():
     return sqlite3.connect(setup_db.DB_FILE)
 
+def clear_table():
+    db = get_db_connection()
+    cur = db.cursor()
+    try:
+        cur.execute(f'DELETE FROM tickers;')
+        cur.execute(f'DELETE FROM sqlite_sequence WHERE name="tickers";') 
+        db.commit()
+        print("All data cleared successfully.")
+    except sqlite3.Error as e:
+        print(f"ERROR: {e}")
+    finally:
+        cur.close()
+        db.close()
+
 def add_account(username, password):
     try:
         db = get_db_connection()
@@ -32,7 +46,7 @@ def get_user(column, value):
         db.close()
     return user
     
-def update_tickers(key):
+def all_tickers(key):
     url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
 
     querystring = {"page":"1","type":"STOCKS"}
@@ -59,6 +73,29 @@ def update_tickers(key):
 
     cur.close()
     db.close()
+
+def filter_tickers(filter, key):
+    if filter == "all_tickers":
+        all_tickers(key)
+        return
+    url = "https://yahoo-finance15.p.rapidapi.com/api/v1/markets/screener"
+    querystring = {"list": f"{filter}"}
+    headers = {
+        "x-rapidapi-key": f"{key}",
+        "x-rapidapi-host": "yahoo-finance15.p.rapidapi.com"
+    }
+    response = requests.get(url, headers=headers, params=querystring)
+    data = response.json()
+    body_section = data["body"]
+    db = get_db_connection()
+    cur = db.cursor()
+    
+    for entry in body_section:
+        cur.execute("INSERT INTO tickers (ticker, name, last_sale, net_change) VALUES (?, ?, ?, ?)", (entry["symbol"], entry['fullExchangeName'], entry["regularMarketPrice"], entry["regularMarketChange"]))
+        db.commit()
+    cur.close()
+    db.close()
+    
 
 def get_tickers():
     db = get_db_connection()
