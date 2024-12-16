@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> Watchlist Page </title>
+</head>
+
+<body>
+    <nav class = "flex items-center justify-between felx-wrap bg-blue-500 p-6 font-bold"> 
+        <div class = "flex items-center text-white mr-6">
+            XAEA69
+        </div>
+    </nav>
+
+    <table>
+        <form action="/logout" method = "post">
+            <input type="submit" value="Log Out" name="log Out">
+        </form>
+
+        <form action = "/main">
+            <input type = "submit" value = "Main" name = "main">
+        </form>
+
+        <thead>
+            <tr>
+                <th> Your Watchlist </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for ticker, data in table.items() %}
+            <tr>
+                <td> {{ticker}} </td>
+                <td> {{data.name}} </td>
+                <td> {{data.last_sale}} </td>
+                <td> {{data.net_change}} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

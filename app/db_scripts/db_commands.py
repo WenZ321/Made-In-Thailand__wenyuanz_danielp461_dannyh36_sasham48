@@ -31,7 +31,7 @@ def get_user(column, value):
         db.commit()
         db.close()
     return user
-
+    
 def update_tickers(key):
     url = "https://yahoo-finance15.p.rapidapi.com/api/v2/markets/tickers"
 
@@ -110,10 +110,11 @@ def get_filters(column):
     
     return data
 
-def filter(filter, key):
+def filter(filter_name, key):
     filters = get_filters("*")
-    func_name = "update_tickers"
-    for f in filters:
-        if filter in f:
-            func_name = f[2]
-    globals()[func_name](key)
+    func = "all_tickers"
+    for filter in filters:
+        if filter_name in filter:
+            func = filter[2]
+    clear_table()
+    filter_tickers(func, key)
