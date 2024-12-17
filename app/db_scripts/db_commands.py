@@ -12,7 +12,6 @@ def clear_table():
         cur.execute(f'DELETE FROM tickers;')
         cur.execute(f'DELETE FROM sqlite_sequence WHERE name="tickers";') 
         db.commit()
-        print("All data cleared successfully.")
     except sqlite3.Error as e:
         print(f"ERROR: {e}")
     finally:
@@ -168,7 +167,6 @@ def remove_watchlist(username, ticker):
     db = get_db_connection()
     cur = db.cursor()
 
-    print("TICKER", ticker)
     cur.execute("DELETE FROM watchlists WHERE username = ? AND ticker = ?", (username, ticker))
     
     db.commit()
