@@ -9,20 +9,23 @@
     <title> Main Page </title>
 </head>
 
-<body class="font-sans bg-sky-50">
-    <nav class = "min-w-full block sticky h-20 bg-blue-800 p-6 font-bold"> 
-        <div class = "flex text-white float-left text-3xl">
+<body class="font-sans bg-sky-50 min-h-screen">
+    <nav class="min-w-full block sticky top-0 h-20 bg-blue-800 p-6 font-bold z-10">
+    <div class="flex items-center justify-between text-white text-3xl">
+        <div>
             XAEA69
         </div>
 
-        <form class ="float-right text-white" action="/logout" method = "post">
-            <input type="submit" value="Log Out" name="log Out">
-        </form>
-
-        <form class ="float-right text-white mr-4" action="/watchlist">
-            <input type="submit" value="watchlist" name="watchlist">
-        </form>
-    </nav>
+        <div class="flex gap-4">
+            <form action="/watchlist">
+                <input type="submit" value="Watchlist" name="watchlist" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
+            </form>
+            <form action="/logout" method="post">
+                <input type="submit" value="Log Out" name="logOut" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
+            </form>
+        </div>
+    </div>
+</nav>
 
     <div class="flex justify-self-center gap-4 mt-10">
         {% for name in filters %}
@@ -31,36 +34,42 @@
             </form>
         {% endfor %}
     </div>
-        
-    <div class="mx-auto mt-10 max-w-3xl">
-        <div class="mx-auto text-3xl"> Stocks </div>
-        {% for ticker, data in table.items() %}
-            <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
-                <form class="row-span-2 content-center col-span-1 justify-self-start" action="/main" method="post">
-                    <button class="transition ease-in-out duration-500 w-0 group-hover:w-full group-hover:block group-hover:visible invisible group-hover:text-white" type="submit" name="watchlist" value="{{ticker}}">
-                     Add
-                    </button>
-                </form>
-                <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-6 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
-                <div class="transition ease-in-out duration-500 font-bold group-hover:text-white justify-self-end group-hover:col-span-3 group-hover:col-start-6 col-start-2 col-span-1">{{data.last_sale}} </div>
-                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 text-wrap group-hover:text-slate-300 group-hover:col-span-6 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
-                <div class="transition ease-in-out duration-500 justify-self-end group-hover:col-span-3 col-span-1 col-start-2 group-hover:col-start-6">
-                    {% if data.net_change|float < 0.0 %}
-                        <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
-                    {% elif data.net_change == 'UNCH'%}
-                        <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
-                    {% else %}
-                        <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
-                    {% endif %}
+
+    <div class="flex-grow">
+        <div class="ml-auto sticky top-40 text-pretty">
+            Today is: <p>{{ today_date }}</p>
+            The next closest holiday is: <p>{{ holiday_name }}</p> on <p>{{ holiday_date}}</p>
+        </div>
+            
+        <div class="mx-auto -mt-32 max-w-3xl mb-10">
+            <div class="mx-auto text-3xl"> Stocks </div>
+            {% for ticker, data in table.items() %}
+                <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
+                    <form class="row-span-2 content-center col-span-1 justify-self-start" action="/main" method="post">
+                        <button class="transition ease-in-out duration-500 w-0 group-hover:w-full group-hover:block group-hover:visible invisible group-hover:text-white" type="submit" name="watchlist" value="{{ticker}}">
+                        Add
+                        </button>
+                    </form>
+                    <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-6 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
+                    <div class="transition ease-in-out duration-500 font-bold group-hover:text-white justify-self-end group-hover:col-span-3 group-hover:col-start-6 col-start-2 col-span-1">{{data.last_sale}} </div>
+                    <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 text-wrap group-hover:text-slate-300 group-hover:col-span-6 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
+                    <div class="transition ease-in-out duration-500 justify-self-end group-hover:col-span-3 col-span-1 col-start-2 group-hover:col-start-6">
+                        {% if data.net_change|float < 0.0 %}
+                            <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                        {% elif data.net_change == 'UNCH'%}
+                            <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
+                        {% else %}
+                            <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-    <footer class="bg-blue-800 w-full mt-10">
+    <footer class="bg-blue-800 w-full mt-auto">
         <div class="w-full p-4">
         <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
         </div>
     </footer>
 </body>
-
 </html>

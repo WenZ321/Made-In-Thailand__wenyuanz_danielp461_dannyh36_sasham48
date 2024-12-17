@@ -1,5 +1,6 @@
 import sqlite3, requests
 from db_scripts import setup_db
+from datetime import datetime
 
 def get_db_connection():
     return sqlite3.connect(setup_db.DB_FILE)
@@ -187,3 +188,49 @@ def filter(filter_name, key):
             func = filter[2]
     clear_table()
     filter_tickers(func, key)
+
+
+def holidays(key):
+    db = get_db_connection()
+    cur = db.cursor()
+    
+    url = "https://calendarific.com/api/v2/holidays"
+    
+    params = {
+    "api_key": key,  
+    "country": "US",     
+    "year": 2024,        
+    "type": "national"   
+    }
+    
+    response = requests.get(url, params = params)
+
+    if response.status_code == 200:
+        data = response.json()
+        holidays = data["response"]["holidays"]
+        for holiday in holidays:
+            cur.execute("INSERT INTO holidays (name, date) VALUES (?, ?)", (holiday["name"], holiday["date"]["iso"]))
+            db.commit()
+    
+    cur.close()
+    db.close()
+    
+def get_holidays(key):
+    
+    holidays(key)
+    
+    db = get_db_connection()
+    cur = db.cursor()
+
+    cur.execute("SELECT name, date FROM holidays")
+    data = cur.fetchall()
+
+    data_entries = [
+        {"name": name, "date": datetime.strptime(date, "%Y-%m-%d").date()}
+        for name, date in data
+    ]
+    
+    cur.close()
+    db.close()
+    
+    return data_entries
