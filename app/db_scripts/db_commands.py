@@ -241,3 +241,19 @@ def get_holidays(key):
     db.close()
     
     return data_entries
+
+def get_advice():
+    url = "https://api.adviceslip.com/advice"
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        data = response.json()
+        bad_list = [33,46,80,114,181,203]
+        if (data["slip"]["id"] in bad_list):
+            advice = "Accept advice"
+        else:
+            advice = data["slip"]["advice"]
+        return advice
+    else:
+        print(f"Error {response.status_code}: Unable to fetch advice.")

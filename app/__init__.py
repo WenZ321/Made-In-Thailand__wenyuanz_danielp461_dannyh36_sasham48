@@ -121,7 +121,10 @@ def main():
         holiday_name = "No upcoming holidays"
         holiday_date = ""
     
-    return render_template("main.html", filters = filter_names, table = table, today_date = today_date, holiday_name = holiday_name, holiday_date = holiday_date)
+    
+    advice = db_commands.get_advice()
+    
+    return render_template("main.html", filters = filter_names, table = table, today_date = today_date, holiday_name = holiday_name, holiday_date = holiday_date, advice = advice)
 
 @app.route("/watchlist", methods=['GET', 'POST'])
 def watchlist():
