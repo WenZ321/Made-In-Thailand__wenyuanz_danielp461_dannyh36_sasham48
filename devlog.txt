@@ -87,3 +87,13 @@ completed watchlists:
     created all the database commands and edits
     finished the code calls in init and jinja
     made code run quickers
+
+dannyH - 12-16-2024 11:34
+templates and __init__.py:
+    added usernames to send to templates in __init__.py
+    navbar edits in all templates that have navbar
+    error page
+    footer edits
+    repositioned tables and added add button to tables 
+    css for advice and calendar
+    transitions
