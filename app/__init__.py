@@ -160,4 +160,8 @@ def error(error_message):
 
 if __name__ == "__main__":
     app.debug = True
+
+    db_commands.main_tickers(keys[1])
+    db_commands.holidays(keys[0])
+
     app.run()
