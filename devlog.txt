@@ -73,3 +73,10 @@ wenZ — 12-15-2024 9:00
 templates and db_commands.py:
     Started on the watchlist page
     Changed how we are ordering our db pages
+
+
+wenZ — 12-16-2024 11:00
+calendarific and advice api and some of init and main:
+    added new db functions for calendarific
+    fixed up code in init to make it cleaner
+    add displaying of calendarific and advice into main.html
