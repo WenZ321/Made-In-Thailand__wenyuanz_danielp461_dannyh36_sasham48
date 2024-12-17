@@ -80,3 +80,10 @@ calendarific and advice api and some of init and main:
     added new db functions for calendarific
     fixed up code in init to make it cleaner
     add displaying of calendarific and advice into main.html
+
+danielP — 12-16-2024 11:08
+completed watchlists:
+    editing and removing watchlists
+    created all the database commands and edits
+    finished the code calls in init and jinja
+    made code run quickers
