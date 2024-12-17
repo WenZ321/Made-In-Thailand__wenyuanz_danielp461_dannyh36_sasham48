@@ -9,11 +9,11 @@
     - Implement authentication: Include your API key in the request headers to authenticate your API calls.
 ```
 Link: https://rapidapi.com/sparior/api/yahoo-finance15
-## MarketStack
+## AdviceSlip
 ```
-    - A key can be provided by signing up to the website on the free plan. After you registered, you will get redirected to the user dashboard where your API Access Key is displayed.
+    - No API key is required
 ```
-Link: https://marketstack.com/documentation
+Link: https://api.adviceslip.com/
 ## Calendarific
 ```
     - You can get an API key by creating an account on Calendarify using your email or GitHub account and heading to your account dashboard.

@@ -37,7 +37,10 @@ CREATE TABLE IF NOT EXISTS filters (
 cur.execute('''
 CREATE TABLE IF NOT EXISTS watchlists (
     username TEXT,
-    tickers TEXT NOT NULL UNIQUE,
+    ticker TEXT NOT NULL,
+    name TEXT NOT NULL, 
+    last_sale TEXT NOT NULL, 
+    net_change TEXT NOT NULL,
     FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
 ''')

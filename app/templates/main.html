@@ -11,21 +11,24 @@
 
 <body class="font-sans bg-sky-50 min-h-screen">
     <nav class="min-w-full block sticky top-0 h-20 bg-blue-800 p-6 font-bold z-10">
-    <div class="flex items-center justify-between text-white text-3xl">
-        <div>
-            XAEA69
-        </div>
+        <div class="flex items-center justify-between text-white text-3xl">
+            <div>
+                XAEA69
+            </div>
 
-        <div class="flex gap-4">
-            <form action="/watchlist">
-                <input type="submit" value="Watchlist" name="watchlist" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
-            </form>
-            <form action="/logout" method="post">
-                <input type="submit" value="Log Out" name="logOut" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
-            </form>
+            <div class="flex gap-4">
+                <form action="/watchlist">
+                    <input type="submit" value="Watchlist" name="watchlist" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
+                </form>
+                <form action="/main">
+                    <input type="submit" value="Home" name="main" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2">
+                </form>
+                <form action="/logout" method="post">
+                    <input type="submit" value="Log Out" name="logOut" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
+                </form>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
     <div class="flex justify-self-center gap-4 mt-10">
         {% for name in filters %}
@@ -41,7 +44,7 @@
             The next closest holiday is: <p>{{ holiday_name }}</p> on <p>{{ holiday_date}}</p>
         </div>
             
-        <div class="mx-auto -mt-32 max-w-3xl mb-10">
+        <div class="mx-auto mt-auto max-w-3xl mb-10">
             <div class="mx-auto text-3xl"> Stocks </div>
             {% for ticker, data in table.items() %}
                 <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
