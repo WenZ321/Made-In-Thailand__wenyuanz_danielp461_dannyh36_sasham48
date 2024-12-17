@@ -85,10 +85,9 @@ def sign_up():
 @app.route("/main", methods=['GET', 'POST'])
 def main():
     if not signed_in():
-        print("1234")
         return redirect('/landing')
     key_check()
-    
+
     filter = "ALL"
     if request.method == "POST":
         if 'filter' in request.form:
@@ -108,14 +107,15 @@ def main():
         
     return render_template("main.html", filters = filter_names, table = table)
 
-@app.route("/watchlist", methods = ['GET', 'POST'])
+@app.route("/watchlist", methods=['GET', 'POST'])
 def watchlist():
     if not signed_in():
         return redirect('/landing')
-    
-    return render_template("watchlist.html")
-    
+    key_check()
 
+    table = db_commands.get_watchlist()
+    return render_template("main.html", table = table)
+    
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
     session.pop('username', None)
@@ -125,15 +125,6 @@ def logout():
 def error(error_message):
     return render_template("error.html", error_message = error_message)
 
-
-
 if __name__ == "__main__":
     app.debug = True
-    
-    
-    #DB_FILE = os.path.join(os.path.dirname(__file__), "allTickers.db")
-    
-    #if not os.path.exists(DB_FILE):
-    #    db_commands.createAllTickers()
-    
     app.run()

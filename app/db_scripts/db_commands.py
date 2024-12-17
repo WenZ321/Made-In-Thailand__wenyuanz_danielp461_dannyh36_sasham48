@@ -23,6 +23,7 @@ def add_account(username, password):
         db = get_db_connection()
         cur = db.cursor()
         cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+        cur.execute("INSERT INTO watchlists (username, tickers) VALUES (?, ?)", (username, ""))
     except sqlite3.Error as e:
         print(f"Database error: {e}")
     finally:
@@ -115,13 +116,55 @@ def get_tickers():
     
     return data_entries
 
-def add_watchlist(ticker, key):
-    # searching 
+def add_watchlist(username, ticker):
+    db = get_db_connection()
+    cur = db.cursor()
 
-    response = requests.get(url, headers=headers, params=querystring)
-    data = response.json()
-    body_section = data["body"]
+    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
+    data = cur.fetchone()
 
+    if ticker not in data:
+        data += ticker + ","
+        cur.execute("""
+            UPDATE watchlists
+            SET tickers = ?
+            WHERE username = ?
+        """, (data, username))
+        db.commit()
+    
+    cur.close()
+    db.close()
+
+def get_watchlist(username):
+    db = get_db_connection()
+    cur = db.cursor()
+
+    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
+    data = cur.fetchone().split(",")
+
+    cur.close()
+    db.close()
+    
+    return data[:len(data) - 1]
+
+def remove_watchlist(username, ticker):
+    db = get_db_connection()
+    cur = db.cursor()
+
+    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
+    data = cur.fetchone()
+
+    if ticker in data:
+        data = data.replace(ticker + ",", "")
+        cur.execute("""
+            UPDATE watchlists
+            SET tickers = ?
+            WHERE username = ?
+        """, (data, username))
+        db.commit()
+
+    cur.close()
+    db.close()
 
 def get_filters(column):
     db = get_db_connection()

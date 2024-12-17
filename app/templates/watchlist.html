@@ -4,42 +4,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <title> Watchlist Page </title>
+    <title> Watch List </title>
 </head>
 
-<body>
-    <nav class = "flex items-center justify-between felx-wrap bg-blue-500 p-6 font-bold"> 
-        <div class = "flex items-center text-white mr-6">
+<body class="font-sans bg-sky-50">
+    <nav class = "min-w-full block sticky h-20 bg-blue-800 p-6 font-bold"> 
+        <div class = "flex text-white float-left text-3xl">
             XAEA69
         </div>
-    </nav>
 
-    <table>
-        <form action="/logout" method = "post">
+        <form class ="float-right text-white" action="/logout" method = "post">
             <input type="submit" value="Log Out" name="log Out">
         </form>
 
-        <form action = "/main">
-            <input type = "submit" value = "Main" name = "main">
+        <form class ="float-right text-white mr-4" action="/watchlist">
+            <input type="submit" value="watchlist" name="watchlist">
         </form>
-
-        <thead>
-            <tr>
-                <th> Your Watchlist </th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for ticker, data in table.items() %}
-            <tr>
-                <td> {{ticker}} </td>
-                <td> {{data.name}} </td>
-                <td> {{data.last_sale}} </td>
-                <td> {{data.net_change}} </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    </nav>
+        
+    <div class="mx-auto mt-10 max-w-2xl">
+        <div class="block mx-auto text-3xl"> Stocks </div>
+        <br>
+        {% for ticker, data in table.items() %}
+            <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
+                <form class="row-span-2 content-center col-span-1 justify-self-start" action="/main" method="post">
+                    <button class="transition ease-in-out duration-500 w-0 group-hover:w-full group-hover:block" type="submit" name="watchlist" value="{{ticker}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="om" fill="white" data-slot="icon">
+                            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
+                        </svg>
+                    </button>
+                </form>
+                <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-4 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
+                <div class="transition ease-in-out duration-500 font-bold group-hover:text-white justify-self-end group-hover:col-span-3 group-hover:col-start-6 col-start-2 col-span-1">{{data.last_sale}} </div>
+                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 truncate group-hover:text-slate-300 group-hover:col-span-4 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
+                <div class="transition ease-in-out duration-500 justify-self-end group-hover:col-span-3 col-span-1 col-start-2 group-hover:col-start-6">
+                    {% if data.net_change|float < 0.0 %}
+                        <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                    {% elif data.net_change == 'UNCH'%}
+                        <div class="bg-white border border-black text-black px-1 py-0.5 rounded-md"> 0 </div>
+                    {% else %}
+                        <div class="bg-emerald-700 border border-emerald-700 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </body>
+
+<footer class="bg-blue-800 w-full mt-10">
+    <div class="w-full p-4">
+      <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
+    </div>
+</footer>
 
 </html>

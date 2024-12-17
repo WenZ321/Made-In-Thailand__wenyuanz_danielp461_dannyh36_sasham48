@@ -36,9 +36,9 @@ CREATE TABLE IF NOT EXISTS filters (
 # WATCHLISTS TABLE
 cur.execute('''
 CREATE TABLE IF NOT EXISTS watchlists (
-    user_id INTEGER,
+    username TEXT,
     tickers TEXT NOT NULL UNIQUE,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    FOREIGN KEY (username) REFERENCES users(username) ON DELETE CASCADE
 );
 ''')
 
