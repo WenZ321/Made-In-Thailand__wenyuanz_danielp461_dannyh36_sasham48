@@ -14,6 +14,8 @@ from flask import Flask, render_template, request, session, redirect
 from datetime import datetime
 from db_scripts import db_commands
 
+
+
 keys = ["key_Calendarific.txt", "key_YH-Finance.txt"]
 for i in range(len(keys)):
     file = open("app/keys/" + keys[i], "r")
@@ -83,23 +85,31 @@ def sign_up():
             return render_template('signup.html', message="Username already exists")
     return render_template('signup.html')
 
+filter = "ALL"
+
 @app.route("/main", methods=['GET', 'POST'])
 def main():
+    
+    global filter
+    
     if not signed_in():
         return redirect('/landing')
     key_check()
 
     db_commands.get_holidays(keys[0])
 
-    filter = "ALL"
+    filter_change = False
+
     if request.method == "POST":
         if 'filter' in request.form:
             filter = request.form["filter"]
+            filter_change = True
         if 'watchlist' in request.form:
             ticker = request.form["watchlist"]
             db_commands.add_watchlist(session['username'], ticker)
-            
-    db_commands.filter(filter, keys[1])
+           
+    if filter_change:
+        db_commands.filter(filter, keys[1])
     table = db_commands.get_tickers()
 
     filter_names = db_commands.get_filters("name")

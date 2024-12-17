@@ -32,7 +32,7 @@
     </nav>
 
     <div class="grid grid-col-2 ">
-        <div class="mx-auto max-w-3xl mb-10 col-span-1">
+        <div class="ml-14 min-w-96 mb-10 col-span-1 mr-5">
             <div class="flex justify-self-center gap-4 mt-10">
                 {% for name in filters %}
                     <form action="/main" method="post">
@@ -40,7 +40,7 @@
                     </form>
                 {% endfor %}
             </div>
-            <div class="mx-auto text-3xl"> Stocks </div>
+            <div class=" min-w-96 text-3xl"> Stocks </div>
             {% for ticker, data in table.items() %}
                 <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
                     <form class="row-span-2 content-center col-span-1 justify-self-start" action="/main" method="post">
@@ -63,7 +63,7 @@
                 </div>
             {% endfor %}
         </div>
-        <div class="col-start-2">
+        <div class="col-start-2 col-span-1 mr-14">
             <div class="mx-auto top-32 p-4 max-w-lg sticky border border-black font-bold rounded-md">
                 Today is: <a class="underline">{{ today_date }}</a> 
                 <br>
