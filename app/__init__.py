@@ -95,12 +95,10 @@ def main():
     if request.method == "POST":
         if 'filter' in request.form:
             filter = request.form["filter"]
-        if 'update_watchlist' in request.form:
-            update_watchlist = request.form["update_watchlist"]
-            watchlist_new = request.form.getlist("watchlist")
-            if watchlist_new:
-                watchlist_new = watchlist_new[0]
-                db_commands.add_watchlist(watchlist_new, keys[1])
+        if 'watchlist' in request.form:
+            ticker = request.form["watchlist"]
+            db_commands.add_watchlist(session['username'], ticker)
+            
     db_commands.filter(filter, keys[1])
     table = db_commands.get_tickers()
 
@@ -133,9 +131,13 @@ def watchlist():
     if not signed_in():
         return redirect('/landing')
     key_check()
-
-    table = db_commands.get_watchlist()
-    return render_template("main.html", table = table)
+    if request.method == "POST":
+        if "remove" in request.form:
+            ticker = request.form["remove"]
+            db_commands.remove_watchlist(session['username'], ticker)
+    
+    table = db_commands.get_watchlist(session['username'])
+    return render_template("watchlist.html", table = table)
     
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():

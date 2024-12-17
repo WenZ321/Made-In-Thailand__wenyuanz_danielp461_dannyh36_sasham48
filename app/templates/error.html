@@ -4,14 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>ERROR</title>
 </head>
 
-<body>
-    <h1>THERE IS A MAJOR ERROR!!!</h1>
-    <p> {{error_message}} </p>
-    <p><a href="/">back to landing page</a></p>
+<body class="font-sans bg-sky-50 min-h-screen">
+    <nav class = "min-w-full block sticky h-20 bg-blue-800 p-6 font-bold"> 
+        <div class = "flex text-white float-left text-3xl">
+            XAEA69
+        </div>
+    </nav>
+    <div class="place-self-center mt-44 space-y-20 item-center text-center font-extrabold">
+        <h1 class="text-5xl bg-rose-200 text-red-700 p-6 animate-pulse">THERE IS A MAJOR ERROR!!!</h1>
+        <p class="text-red-700 text-xl"> {{error_message}} </p>
+        <form class ="text-lg" action="/">
+            <button class="rounded-2xl mx-auto min-w-3xl px-5 py-1 text-blue-800 transition ease-in-out mt-2 border border-solid border-blue-800 px-3 py-2 hover:ring-green-300 hover:-translate-y-1 hover:scale-110 hover:border-green-300 hover:bg-emerald-300 hover:text-green-800" type="submit">Back to Landing Page</button>
+        </form>
+    </div>
+    <footer class="bg-blue-800 w-full mt-auto">
+        <div class="w-full p-4">
+          <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
+        </div>
+    </footer>
 </body>
 
 </html>
