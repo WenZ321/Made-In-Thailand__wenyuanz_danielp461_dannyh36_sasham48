@@ -42,6 +42,14 @@ CREATE TABLE IF NOT EXISTS watchlists (
 );
 ''')
 
+# NATIONAL HOLIDAYS TABLE
+cur.execute('''
+CREATE TABLE IF NOT EXISTS holidays (
+    name TEXT NOT NULL,
+    date TEXT NOT NULL
+);             
+''')
+
 cur.execute("SELECT * from filters")
 data = cur.fetchall()
 if len(data) == 0:
