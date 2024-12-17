@@ -17,6 +17,7 @@
             </div>
 
             <div class="flex gap-4">
+                <p class="text-lg text-white px-4 py-2"> Hi {{user}}</p>
                 <form action="/watchlist">
                     <input type="submit" value="Watchlist" name="watchlist" class="text-lg text-white bg-transparent border-none cursor-pointer hover:bg-sky-300 hover:border-sky-500 rounded-xl px-4 py-2" />
                 </form>
@@ -30,20 +31,15 @@
         </div>
     </nav>
 
-    <div class="flex justify-self-center gap-4 mt-10">
-        {% for name in filters %}
-            <form action="/main" method="post">
-                <input class = "px-1 py-0.5 border border-black hover:bg-sky-300 hover:border-sky-500 rounded-xl"type="submit" value="{{name}}" name="filter">
-            </form>
-        {% endfor %}
-    </div>
-
-    <div class="flex flex-row min-h-screen">
-        <div class="ml-auto sticky top-10 p-4">
-            Today is: <p>{{ today_date }}</p>
-            The next closest holiday is: <p>{{ holiday_name }}</p> on <p>{{ holiday_date }}</p>
-        </div>
-        <div class="mx-auto max-w-3xl mb-10">
+    <div class="grid grid-col-2 ">
+        <div class="mx-auto max-w-3xl mb-10 col-span-1">
+            <div class="flex justify-self-center gap-4 mt-10">
+                {% for name in filters %}
+                    <form action="/main" method="post">
+                        <input class = "px-1 py-0.5 border border-black hover:bg-sky-300 hover:border-sky-500 rounded-xl"type="submit" value="{{name}}" name="filter">
+                    </form>
+                {% endfor %}
+            </div>
             <div class="mx-auto text-3xl"> Stocks </div>
             {% for ticker, data in table.items() %}
                 <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
@@ -67,11 +63,17 @@
                 </div>
             {% endfor %}
         </div>
+        <div class="col-start-2">
+            <div class="mx-auto top-32 p-4 max-w-lg sticky border border-black font-bold rounded-md">
+                Today is: <a class="underline">{{ today_date }}</a> 
+                <br>
+                The next closest holiday is: <a class="underline">{{ holiday_name }}</a> on <a class="underline">{{ holiday_date }}</a>
+            </div>
+            <p class="max-w-lg text-wrap mx-auto sticky top-96 italic font-bold">
+                {{ advice }}
+            </p>
+        </div>
     </div>
-
-    <p>
-        {{ advice }}
-    </p>
 
     <footer class="bg-blue-800 w-full mt-auto">
         <div class="w-full p-4">

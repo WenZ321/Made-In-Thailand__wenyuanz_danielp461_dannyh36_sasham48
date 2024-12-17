@@ -124,7 +124,7 @@ def main():
     
     advice = db_commands.get_advice()
     
-    return render_template("main.html", filters = filter_names, table = table, today_date = today_date, holiday_name = holiday_name, holiday_date = holiday_date, advice = advice)
+    return render_template("main.html", user=session['username'], filters = filter_names, table = table, today_date = today_date, holiday_name = holiday_name, holiday_date = holiday_date, advice = advice)
 
 @app.route("/watchlist", methods=['GET', 'POST'])
 def watchlist():
@@ -137,7 +137,7 @@ def watchlist():
             db_commands.remove_watchlist(session['username'], ticker)
     
     table = db_commands.get_watchlist(session['username'])
-    return render_template("watchlist.html", table = table)
+    return render_template("watchlist.html", user=session['username'], table = table)
     
 @app.route("/logout", methods = ['GET', 'POST'])
 def logout():
