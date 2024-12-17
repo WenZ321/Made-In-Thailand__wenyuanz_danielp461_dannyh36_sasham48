@@ -20,9 +20,5 @@ Link: https://api.adviceslip.com/
     - You can get an API key by creating an account on Calendarify using your email or GitHub account and heading to your account dashboard.
 ```
 Link: https://calendarific.com/api-documentation
-## Deck of Cards
-```
-    - No API key is required
-```
-Link: https://deckofcardsapi.com/ 
+
 
