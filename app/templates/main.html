@@ -32,7 +32,7 @@
         {% endfor %}
     </div>
         
-    <div class="mx-auto mt-10 max-w-2xl">
+    <div class="mx-auto mt-10 max-w-3xl">
         <div class="mx-auto text-3xl"> Stocks </div>
         {% for ticker, data in table.items() %}
             <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
@@ -41,9 +41,9 @@
                      Add
                     </button>
                 </form>
-                <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-4 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
+                <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-6 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
                 <div class="transition ease-in-out duration-500 font-bold group-hover:text-white justify-self-end group-hover:col-span-3 group-hover:col-start-6 col-start-2 col-span-1">{{data.last_sale}} </div>
-                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 text-wrap group-hover:text-slate-300 group-hover:col-span-4 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
+                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 text-wrap group-hover:text-slate-300 group-hover:col-span-6 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
                 <div class="transition ease-in-out duration-500 justify-self-end group-hover:col-span-3 col-span-1 col-start-2 group-hover:col-start-6">
                     {% if data.net_change|float < 0.0 %}
                         <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
@@ -58,7 +58,7 @@
     </div>
     <footer class="bg-blue-800 w-full mt-10">
         <div class="w-full p-4">
-          <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
+        <span class="text-sm text-white">© 2024 Made-In-Thailand. All Rights Reserved.</span>
         </div>
     </footer>
 </body>
