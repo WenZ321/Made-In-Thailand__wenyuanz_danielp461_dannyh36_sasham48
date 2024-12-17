@@ -23,7 +23,6 @@ def add_account(username, password):
         db = get_db_connection()
         cur = db.cursor()
         cur.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
-        cur.execute("INSERT INTO watchlists (username, tickers) VALUES (?, ?)", (username, ""))
     except sqlite3.Error as e:
         print(f"Database error: {e}")
     finally:
@@ -116,22 +115,31 @@ def get_tickers():
     
     return data_entries
 
-def add_watchlist(username, ticker):
+def add_watchlist(username, ticker_name):
     db = get_db_connection()
     cur = db.cursor()
 
-    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
-    data = cur.fetchone()
+    cur.execute("SELECT ticker, name, last_sale, net_change FROM tickers WHERE ticker = ?", (ticker_name,))
+    data = cur.fetchall()
+    data_entries = []
 
-    if ticker not in data:
-        data += ticker + ","
-        cur.execute("""
-            UPDATE watchlists
-            SET tickers = ?
-            WHERE username = ?
-        """, (data, username))
+    for ticker, name, last_sale, net_change in data:
+        data_entries = [ticker, name, last_sale, net_change]
+
+    cur.execute("SELECT ticker FROM watchlists WHERE username = ?", (username,))
+    data = cur.fetchall()
+
+    if(len(data) == 0):
+        cur.execute("INSERT INTO watchlists (username, ticker, name, last_sale, net_change) VALUES (?, ?, ?, ?, ?)", 
+                        (username, data_entries[0], data_entries[1], data_entries[2], data_entries[3]))
         db.commit()
-    
+
+    for ticker_tup in data:
+        if data_entries[0] not in ticker_tup:
+            cur.execute("INSERT INTO watchlists (username, ticker, name, last_sale, net_change) VALUES (?, ?, ?, ?, ?)", 
+                        (username, data_entries[0], data_entries[1], data_entries[2], data_entries[3]))
+            db.commit()
+
     cur.close()
     db.close()
 
@@ -139,30 +147,30 @@ def get_watchlist(username):
     db = get_db_connection()
     cur = db.cursor()
 
-    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
-    data = cur.fetchone().split(",")
+    cur.execute("SELECT ticker, name, last_sale, net_change FROM watchlists WHERE username = ?", (username,))
+    data = cur.fetchall()
 
+    data_entries = {
+        ticker: {
+            "name": name,
+            "last_sale": last_sale,
+            "net_change": net_change
+        }
+        for ticker, name, last_sale, net_change in data
+    }
     cur.close()
     db.close()
-    
-    return data[:len(data) - 1]
+
+    return data_entries
 
 def remove_watchlist(username, ticker):
     db = get_db_connection()
     cur = db.cursor()
 
-    cur.execute("SELECT tickers FROM watchlists WHERE username = ?", (username,))
-    data = cur.fetchone()
-
-    if ticker in data:
-        data = data.replace(ticker + ",", "")
-        cur.execute("""
-            UPDATE watchlists
-            SET tickers = ?
-            WHERE username = ?
-        """, (data, username))
-        db.commit()
-
+    print("TICKER", ticker)
+    cur.execute("DELETE FROM watchlists WHERE username = ? AND ticker = ?", (username, ticker))
+    
+    db.commit()
     cur.close()
     db.close()
 
@@ -179,7 +187,6 @@ def get_filters(column):
     return data
 
 def filter(filter_name, key):
-    print(key, "hiasdasdas")
     filters = get_filters("*")
     func = "all_tickers"
     for filter in filters:

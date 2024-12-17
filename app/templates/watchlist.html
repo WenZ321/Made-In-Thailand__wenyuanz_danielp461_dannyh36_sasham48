@@ -19,26 +19,35 @@
             <input type="submit" value="Log Out" name="log Out">
         </form>
 
+        <form class ="float-right text-white mr-4" action="/main">
+            <input type="submit" value="Home" name="main">
+        </form>
+
         <form class ="float-right text-white mr-4" action="/watchlist">
-            <input type="submit" value="watchlist" name="watchlist">
+            <input type="submit" value="Watch List" name="watchlist">
         </form>
     </nav>
         
+    <div class="flex justify-self-center gap-4 mt-10">
+        {% for name in filters %}
+            <form action="/main" method="post">
+                <input class = "px-1 py-0.5 border border-black hover:bg-sky-300 hover:border-sky-500 rounded-xl"type="submit" value="{{name}}" name="filter">
+            </form>
+        {% endfor %}
+    </div>
+        
     <div class="mx-auto mt-10 max-w-2xl">
-        <div class="block mx-auto text-3xl"> Stocks </div>
-        <br>
+        <div class="mx-auto text-3xl"> Stocks </div>
         {% for ticker, data in table.items() %}
             <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
-                <form class="row-span-2 content-center col-span-1 justify-self-start" action="/main" method="post">
-                    <button class="transition ease-in-out duration-500 w-0 group-hover:w-full group-hover:block" type="submit" name="watchlist" value="{{ticker}}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" class="om" fill="white" data-slot="icon">
-                            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
-                        </svg>
+                <form class="row-span-2 content-center col-span-1 justify-self-start" action="/watchlist" method="post">
+                    <button class="transition ease-in-out duration-500 w-0 group-hover:w-full group-hover:block group-hover:visible invisible group-hover:text-white" type="submit" name="remove" value="{{ticker}}">
+                     Remove
                     </button>
                 </form>
                 <div class="transition ease-in-out duration-500 justify-self-start font-bold group-hover:text-white group-hover:col-span-4 group-hover:col-start-2 col-span-1 col-start-1">{{ticker}} </div> 
                 <div class="transition ease-in-out duration-500 font-bold group-hover:text-white justify-self-end group-hover:col-span-3 group-hover:col-start-6 col-start-2 col-span-1">{{data.last_sale}} </div>
-                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 truncate group-hover:text-slate-300 group-hover:col-span-4 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
+                <div class="transition ease-in-out duration-500 justify-self-start text-slate-400 text-wrap group-hover:text-slate-300 group-hover:col-span-4 group-hover:col-start-2 col-start-1 col-span-1">{{data.name}}</div>
                 <div class="transition ease-in-out duration-500 justify-self-end group-hover:col-span-3 col-span-1 col-start-2 group-hover:col-start-6">
                     {% if data.net_change|float < 0.0 %}
                         <div class="bg-rose-600 border border-rose-600 text-white px-1 py-0.5 rounded-md"> {{data.net_change}} </div>
