@@ -242,7 +242,6 @@ def get_holidays(key):
     
     return data_entries
 
-
 def get_advice():
     url = "https://api.adviceslip.com/advice"
     
@@ -250,12 +249,11 @@ def get_advice():
     
     if response.status_code == 200:
         data = response.json()
-        print(data)
-        advice = data["slip"]["advice"]  # Extract the advice text
-        print("Random Advice:", advice)
+        bad_list = [33,46,80,114,181,203]
+        if (data["slip"]["id"] in bad_list):
+            advice = "Accept advice"
+        else:
+            advice = data["slip"]["advice"]
         return advice
     else:
         print(f"Error {response.status_code}: Unable to fetch advice.")
-    
-    
-    

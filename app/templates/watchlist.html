@@ -31,7 +31,7 @@
     </nav>
         
     <div class="mx-auto mt-10 max-w-3xl">
-        <div class="mx-auto text-3xl"> Stocks </div>
+        <div class="mx-auto text-3xl"> My Watch List </div>
         {% for ticker, data in table.items() %}
             <div class="transition ease-in-out duration-500 group grid grid-rows-2 hover:grid-cols-8 grid-col-2 gap-auto px-8 py-2 hover:bg-blue-800 rounded-2xl">
                 <form class="row-span-2 content-center col-span-1 justify-self-start" action="/watchlist" method="post">
