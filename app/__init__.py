@@ -11,6 +11,7 @@ Target Ship Date: 2024-12-13
 import sqlite3
 import os
 from flask import Flask, render_template, request, session, redirect
+from datetime import datetime
 from db_scripts import db_commands
 
 keys = ["key_Calendarific.txt", "key_YH-Finance.txt"]
@@ -88,6 +89,8 @@ def main():
         return redirect('/landing')
     key_check()
 
+    db_commands.get_holidays(keys[0])
+
     filter = "ALL"
     if request.method == "POST":
         if 'filter' in request.form:
@@ -102,8 +105,23 @@ def main():
     filter_names = db_commands.get_filters("name")
     for i in range(len(filter_names)):
         filter_names[i] = filter_names[i][0]
-        
-    return render_template("main.html", filters = filter_names, table = table)
+    
+    now = datetime.now()
+    today_date = now.date()
+    
+    holidays = db_commands.get_holidays(keys[0])
+    
+    future_holidays = [h for h in holidays if h["date"] >= today_date]
+
+    if future_holidays:
+        next_holiday = future_holidays[0]  # First holiday in the future
+        holiday_name = next_holiday["name"]
+        holiday_date = next_holiday["date"]
+    else:
+        holiday_name = "No upcoming holidays"
+        holiday_date = ""
+    
+    return render_template("main.html", filters = filter_names, table = table, today_date = today_date, holiday_name = holiday_name, holiday_date = holiday_date)
 
 @app.route("/watchlist", methods=['GET', 'POST'])
 def watchlist():
